@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: sudo apt-get install -y cmake g++
+
+    - name: Configure
+      run: mkdir build && cd build && cmake ..
+
+    - name: Build
+      run: cd build && make
+
+    - name: Test
+      run: cd build && ctest
